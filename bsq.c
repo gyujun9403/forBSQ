@@ -1,7 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bsq.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mson </var/mail/mson>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/15 18:44:29 by mson              #+#    #+#             */
+/*   Updated: 2021/03/15 23:40:55 by mson             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+
+char buff[1024];
 
 typedef struct	s_map
 {
@@ -12,32 +26,56 @@ typedef struct	s_map
 	int		**board;
 }	t_map;
 
+void	init_buff(char *buff)
+{
+	int index;
 
-void	ft_malloc(int fd, char **map, int row)
+	index = 0;
+	while (buff[index])
+	{
+		buff[index] = 0;
+		index++;
+	}
+}
+
+char	*ft_strcpy(char *dest, char *src)
+{
+	int index;
+
+	index = 0;
+	while (src[index]) 
+	{
+		dest[index] = src[index];
+		index++;
+	}
+	dest[index] = '\0';
+	return (dest);
+}
+
+char	**ft_malloc(int fd, char **map, int row)
 {
 	int line;
 	int size;
 	char c;
-	int check;
 
-	check = 0;
 	line = 0;
+	size = 0;
 	map =(char **)malloc(sizeof(char *) * row);
 	while (read(fd, &c, 1))
 	{
-		if (check != 0)
-			size++;
+		buff[size] = c;
+		size++;
 		if (c == '\n')
 		{	
-			if (check != 0)
-			{
-				map[line] = (char *)malloc(sizeof(char) * size);
-				line++;
-				size = 0;
-				check++;
-			}
+			map[line] = (char *)malloc(sizeof(char) * size + 1);
+			ft_strcpy(map[line], buff);
+			map[line][size] = '\0';
+			init_buff(buff);
+			line++;
+			size = 0;
 		}
 	}
+	return (map);
 }
 
 int	split_number(char *condition, int size)
@@ -52,7 +90,7 @@ int	split_number(char *condition, int size)
 		if (condition[index] < '0' || condition[index] > '9')
 			return (0);
 		number *= 10;
-		number += condition[index] - '0';
+		number += (condition[index] - '0');
 		index++;
 	}
 	return (number);
@@ -65,113 +103,80 @@ char	*ft_condition(int fd, int *row)
 	char	*condition;
 	int size;
 
+
 	index = 0;
 	size = 0;
 	while (read(fd, &c, 1) && c != '\n')
-		size++;
-	condition =(char *)malloc(sizeof(char) * size + 1);
-	while (read(fd, &c, 1) && c != '\n')
 	{
-		condition[index] = c;
-		index++;
+		buff[size] = c;
+		size++;
 	}
-	condition[index] = '\0';
+	condition =(char *)malloc(sizeof(char) * size + 1);
+	buff[size] = '\0';
+	ft_strcpy(condition, buff);
+	init_buff(buff);
 	*row = split_number(condition, size);
 	return (condition);
 }
 
-int		ft_column(int fd)
+int		ft_column(char **map)
 {
-	int index;
+	int line;
 	int size;
 	int check;
-	char c;
 
-	index = 0;
+	line = 0;
 	size = 0;
 	check = 0;
-	while (read(fd, &c, 1))
+	while (map[line])
 	{
-		if (!check)
+		while (map[line][size])
 			size++;
-		if (c == '\n')
-			check++;
-		if (check && c == '\n')
-			return (size);
+		if (check == 0)
+			check = size;
+		else if (check != size)
+			return (0);
+		size = 0;
+		line++;
 	}
-	return (0);
+	return (check);
 }
 
-char	**store(int fd, int row)
+t_map	set_map(int fd, t_map l_map)
 {
-	int 	index;
-	int		line;
-	char 	c;
-	char	**map;
+	int row;
+	char **map;
+	int	**space;
+	int index;
 
-	index = 0;
-	line = 0;
-	ft_malloc(fd, map, row);
-	while (read(fd , &c, 1))
-	{	
-		if (c == '\n')
-		{
-			line++;
-			index = 0;
-		}
-		if (line > 0)
-		{	
-			map[line - 1][index] = c;
-			index++;
-		}
-	return (map);
-	}
-	return (0);
+	row = 0;
+	index = -1;
+	l_map.condition = ft_condition(fd, &row);
+	l_map.map = ft_malloc(fd, map, row);
+	l_map.col = ft_column(l_map.map);
+	l_map.row = row;
+	space = (int **)malloc(sizeof(int *) * l_map.row);
+	while (++index < row)
+		space[index] =(int *)malloc(sizeof(int) * l_map.col);
+	l_map.board = space;
+	return (l_map);
 }
 
 int	main(int argc, char **argv)
 {
-	int index;
-	int row;
-	int		**space;
-	int		j;
+	int 	index;
 	int 	fd;
-	int		i;
-	int 	k;
-
-	k = 0;
-	i = 0;
 	t_map l_map;
+
 	index = 1;
-	row = 0;
-	j = -1;
 	if (argc == 1)
-		write(1,"c",1);
+		return (0);
 	else if (argc >= 2)
 	{
 		while (index < argc)
 		{
 			fd = open(argv[index], O_RDONLY);
-			l_map.col = ft_column(fd);
-			l_map.condition = ft_condition(fd, &row);
-			l_map.map =  store(fd, row);
-			l_map.row = row;
-			space =(int **)malloc(sizeof(int *) * l_map.row);
-			while (++j < row)
-				space[j] =(int *)malloc(sizeof(int) * l_map.col);
-			l_map.board = space;
 			index++;
-		}
-		printf("%d",l_map.row);
-		while (i < l_map.row)
-		{
-			while(k < l_map.col)
-			{
-				printf("%c",l_map.map[i][k]);
-				k++;
-			}
-			i++;
-			k = 0;
 		}
 	}
 }
