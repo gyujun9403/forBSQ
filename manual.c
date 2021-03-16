@@ -41,7 +41,7 @@ void manual_w2(t_info *info)
 		ft_strlcat(info->map[i], g_buff, leng + 1);
 		i++;
 	}
-	info->col = ft_column(info->map);
+	info->col = ft_column(info);
 	info->board = (int **)malloc(sizeof(int *) * info->row);
 	i = 0;
 	while (i < info->row)

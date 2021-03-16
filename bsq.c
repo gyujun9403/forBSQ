@@ -6,7 +6,7 @@
 /*   By: mson </var/mail/mson>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 18:44:29 by mson              #+#    #+#             */
-/*   Updated: 2021/03/16 19:51:58 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/16 21:13:06 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ void	ft_condition(int fd, t_info *info)
 	int index;
 	char c;
 	int size;
+	int leng;
 
 	index = 0;
 	size = 0;
-	while (read(fd, &c, 1) && c != '\n')
+	while ((leng = read(fd, &c, 1)) && c != '\n')
 	{
 		g_buff[size] = c;
 		size++;
@@ -59,7 +60,7 @@ void	ft_condition(int fd, t_info *info)
 	printf("%s\n", info->condition);
 }
 
-int		ft_column(char **map)
+int		ft_column(t_info *info)
 {
 	int line;
 	int size;
@@ -68,9 +69,9 @@ int		ft_column(char **map)
 	line = 0;
 	size = 0;
 	check = 0;
-	while (map[line])
+	while (line < info->row)
 	{
-		while (map[line][size])
+		while (info->map[line][size])
 			size++;
 		if (check == 0)
 			check = size;
@@ -90,7 +91,7 @@ void	set_map(int fd, t_info *info)
 	index = -1;
 	ft_condition(fd, info);
 	ft_malloc(fd, info);
-	info->col = ft_column(info->map);
+	info->col = ft_column(info);
 	info->board = (int **)malloc(sizeof(int *) * info->row);
 	while (++index < info->row)
 	{
