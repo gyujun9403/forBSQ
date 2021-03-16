@@ -10,21 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include "bsq.h"
 #include <stdio.h>
 
 char buff[1024];
-
-typedef struct	s_map
-{
-	int	row;
-	int col;
-	char	*condition;
-	char	**map;
-	int		**board;
-}	t_map;
 
 void	init_buff(char *buff)
 {
@@ -43,7 +32,7 @@ char	*ft_strcpy(char *dest, char *src)
 	int index;
 
 	index = 0;
-	while (src[index]) 
+	while (src[index])
 	{
 		dest[index] = src[index];
 		index++;
@@ -66,7 +55,7 @@ char	**ft_malloc(int fd, char **map, int row)
 		buff[size] = c;
 		size++;
 		if (c == '\n')
-		{	
+		{
 			map[line] = (char *)malloc(sizeof(char) * size + 1);
 			ft_strcpy(map[line], buff);
 			map[line][size] = '\0';
@@ -100,9 +89,9 @@ char	*ft_condition(int fd, int *row)
 {
 	int index;
 	char c;
-	char	*condition;
+	char	*first_line;
 	int size;
-
+	char	*condition;
 
 	index = 0;
 	size = 0;
@@ -111,11 +100,13 @@ char	*ft_condition(int fd, int *row)
 		buff[size] = c;
 		size++;
 	}
-	condition =(char *)malloc(sizeof(char) * size + 1);
+	first_line =(char *)malloc(sizeof(char) * size + 1);
+	condition = (char *)malloc(sizeof(char) * 4);
 	buff[size] = '\0';
-	ft_strcpy(condition, buff);
+	ft_strcpy(first_line, buff);
+	*row = split_number(first_line, size);
 	init_buff(buff);
-	*row = split_number(condition, size);
+	ft_strlcat(condition, first_line + size - 3, 4);
 	return (condition);
 }
 
@@ -142,7 +133,7 @@ int		ft_column(char **map)
 	return (check);
 }
 
-t_map	set_map(int fd, t_map l_map)
+void	set_map(int fd, t_map *l_map)
 {
 	int row;
 	char **map;
@@ -151,22 +142,21 @@ t_map	set_map(int fd, t_map l_map)
 
 	row = 0;
 	index = -1;
-	l_map.condition = ft_condition(fd, &row);
-	l_map.map = ft_malloc(fd, map, row);
-	l_map.col = ft_column(l_map.map);
-	l_map.row = row;
-	space = (int **)malloc(sizeof(int *) * l_map.row);
+	l_map->condition = ft_condition(fd, &row);
+	l_map->map = ft_malloc(fd, map, row);
+	l_map->col = ft_column(l_map->map);
+	l_map->row = row;
+	space = (int **)malloc(sizeof(int *) * l_map->row);
 	while (++index < row)
-		space[index] =(int *)malloc(sizeof(int) * l_map.col);
-	l_map.board = space;
-	return (l_map);
+		space[index] =(int *)malloc(sizeof(int) * l_map->col);
+	l_map->board = space;
 }
 
 int	main(int argc, char **argv)
 {
 	int 	index;
 	int 	fd;
-	t_map l_map;
+	t_map   l_map;
 
 	index = 1;
 	if (argc == 1)
@@ -176,7 +166,14 @@ int	main(int argc, char **argv)
 		while (index < argc)
 		{
 			fd = open(argv[index], O_RDONLY);
+			set_map(fd, &l_map);
 			index++;
 		}
+		printf("%d\n", l_map.row);
+		printf("%d\n", l_map.col);
+		printf("%s\n", l_map.condition);
+		printf("%s\n", l_map.map[0]);
+		printf("%s\n", l_map.map[1]);
+		printf("%s\n", l_map.map[l_map.row-1]);
 	}
 }
