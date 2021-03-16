@@ -6,7 +6,7 @@
 /*   By: mson </var/mail/mson>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 18:44:29 by mson              #+#    #+#             */
-/*   Updated: 2021/03/17 01:22:41 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 03:44:06 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,14 @@ void	ft_malloc(int fd, t_info *info)
 	line = 0;
 	size = 0;
 	info->map =(char **)malloc(sizeof(char *) * info->row);
-	while (read(fd, &c, 1) && line < info->row)
+	while (read(fd, &c, 1))
 	{
-		if (c == '\n')
+		if (line ==  info->row)
+		{
+			info->error = 1;
+			break;
+		}
+		if (c == '\n' && line < info->row)
 		{
 			info->map[line] = (char *)malloc(sizeof(char) * size + 1);
 			ft_strcpy(info->map[line], g_buff);
@@ -40,7 +45,7 @@ void	ft_malloc(int fd, t_info *info)
 			map_cond_check(c,info);
 		}
 	}
-	row_check(fd, info);
+	//row_check(fd, info, line);
 }
 
 void	ft_condition(int fd, t_info *info)
@@ -57,6 +62,7 @@ void	ft_condition(int fd, t_info *info)
 		g_buff[size] = c;
 		size++;
 	}
+	chk_condition(info, g_buff, size);
 	info->row = split_number(g_buff, size);
 	info->condition = (char *)malloc(sizeof(char) * 4);
 	ft_strlcat(info->condition, g_buff + size - 3, 4);
@@ -78,7 +84,10 @@ int		ft_column(t_info *info)
 		if (check == 0)
 			check = size;
 		else if (check != size)
+		{
+			info->error = 1;
 			return (0);
+		}
 		size = 0;
 		line++;
 	}

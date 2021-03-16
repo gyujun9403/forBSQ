@@ -6,7 +6,7 @@
 /*   By: gyeon <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 16:52:05 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 00:49:07 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 03:50:08 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,13 @@ int	main(int argc, char **argv)
 	if (argc == 1)
 	{
 		manual_w1(&info);
-		fill_board(&info);
-		prt_map(&info);
+		if(info.error == 1)
+			write(1, "map error\n", 10);
+		else
+		{
+			fill_board(&info);
+			prt_map(&info);
+		}
 		free_info(&info);
 	}
 	else
@@ -33,10 +38,16 @@ int	main(int argc, char **argv)
 			fd = open(argv[index], O_RDONLY);
 			set_map(fd, &info);
 			close(fd);
-			fill_board(&info);
-			prt_map(&info);
-			index++;
+			if(info.error == 1)
+				write(1, "map error\n", 10);
+			else
+			{
+				fill_board(&info);
+				prt_map(&info);
+			}
+			info.error = 0;
 			free_info(&info);
+			index++;
 		}
 	return (0);
 }

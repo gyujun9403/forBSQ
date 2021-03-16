@@ -13,6 +13,7 @@ void manual_w1(t_info *info)
 	{
 		g_buff[leng++] = w;
 	}
+	chk_condition(info, g_buff, leng);
 	info->row = split_number(g_buff, leng);
 	info->condition = (char *)malloc(4);
 	ft_strlcat(info->condition, g_buff + leng - 3, 4);
@@ -33,6 +34,7 @@ void manual_w2(t_info *info)
 		leng = 0;
 		while ((readin = read(0, &w, 1)) > 0 && w != '\n')
 		{
+			map_cond_check(w, info);
 			g_buff[leng++] = w;
 		}
 		info->map[i] = (char *)malloc(sizeof(char) * leng + 1);

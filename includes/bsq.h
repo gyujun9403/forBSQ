@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 00:14:51 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/16 21:12:09 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 03:14:41 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void prt_map(t_info *info);
 void fill_board(t_info *info);
 void free_info(t_info *info);
 void	map_cond_check(char c, t_info *info);
-void	row_check(int fd, t_info *info);
+void	row_check(int fd, t_info *info, int line);
+void	error_isprintable(t_info *info, char c);
+void chk_condition(t_info *info, char *buff, int size);
 
 #endif
