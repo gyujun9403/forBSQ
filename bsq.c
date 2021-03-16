@@ -6,40 +6,13 @@
 /*   By: mson </var/mail/mson>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 18:44:29 by mson              #+#    #+#             */
-/*   Updated: 2021/03/15 23:40:55 by mson             ###   ########.fr       */
+/*   Updated: 2021/03/16 17:39:53 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
-#include <stdio.h>
 
 extern char g_buff[BUFF_SIZE];
-
-void	init_buff(char *g_buff)
-{
-	int index;
-
-	index = 0;
-	while (g_buff[index])
-	{
-		g_buff[index] = 0;
-		index++;
-	}
-}
-
-char	*ft_strcpy(char *dest, char *src)
-{
-	int index;
-
-	index = 0;
-	while (src[index])
-	{
-		dest[index] = src[index];
-		index++;
-	}
-	dest[index] = '\0';
-	return (dest);
-}
 
 char	**ft_malloc(int fd, char **map, int row)
 {
@@ -65,24 +38,6 @@ char	**ft_malloc(int fd, char **map, int row)
 		}
 	}
 	return (map);
-}
-
-int	split_number(char *condition, int size)
-{
-	int index;
-	int number;
-
-	index = 0;
-	number = 0;
-	while (index <size - 3)
-	{
-		if (condition[index] < '0' || condition[index] > '9')
-			return (0);
-		number *= 10;
-		number += (condition[index] - '0');
-		index++;
-	}
-	return (number);
 }
 
 char	*ft_condition(int fd, int *row)
@@ -133,41 +88,35 @@ int		ft_column(char **map)
 	return (check);
 }
 
-void	set_map(int fd, t_map *l_map)
+void	set_map(int fd, t_info *info)
 {
 	int row;
 	char **map;
-	int	**space;
 	int index;
 
 	row = 0;
 	index = -1;
-	l_map->condition = ft_condition(fd, &row);
-	l_map->map = ft_malloc(fd, map, row);
-	l_map->col = ft_column(l_map->map);
-	l_map->row = row;
-	space = (int **)malloc(sizeof(int *) * l_map->row);
+	info->condition = ft_condition(fd, &row);
+	info->map = ft_malloc(fd, map, row);
+	info->col = ft_column(info->map);
+	info->row = row;
+	info->board = (int **)malloc(sizeof(int *) * info->row);
 	while (++index < row)
-		space[index] =(int *)malloc(sizeof(int) * l_map->col);
-	l_map->board = space;
+		info->board[index] =(int *)malloc(sizeof(int) * info->col);
 }
 
-int	main(int argc, char **argv)
+void	free_info(t_info *info)
 {
-	int 	index;
-	int 	fd;
-	t_map   l_map;
+	int i;
 
-	index = 1;
-	if (argc == 1)
-		return (0);
-	else if (argc >= 2)
+	i = 0;
+	free(info->condition);
+	while (i < info->row)
 	{
-		while (index < argc)
-		{
-			fd = open(argv[index], O_RDONLY);
-			set_map(fd, &l_map);
-			index++;
-		}
+		free(info->map[i]);
+		free(info->board[i]);
+		i++;
 	}
+	free(info->map);
+	free(info->board);
 }
