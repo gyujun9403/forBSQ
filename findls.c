@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:07:54 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/16 17:40:55 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/16 18:12:12 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ int min_2by2(t_info *info, int i, int j)
 	rcm[2] = 0;
 	if(i == 0 && j == 0)
 		;
-	else if (i == 0)
-		rcm[1] = info->board[i][j - 1];
-	else if (j == 0)
-		rcm[2] = info->board[i - 1][j];
-	else
+	else if (i != 0 && j == 0)
+		rcm[1] = info->board[i - 1][j];
+	else if (i == 0 && j != 0)
+		rcm[2] = info->board[i][j - 1];
+	else if(i != 0 && j != 0)
 	{
 		rcm[0] = info->board[i - 1][j - 1];
-		rcm[1] = info->board[i][j - 1];
-		rcm[2] = info->board[i - 1][j];
+		rcm[1] = info->board[i - 1][j];
+		rcm[2] = info->board[i][j - 1];
 	}
 	min = rcm[0];
 	min = (min < rcm[1]) ? (min) : (rcm[1]);
@@ -96,6 +96,8 @@ void fill_board(t_info *info)
 	i = 0;
 	j = 0;
 	max[0] = 0;
+	max[1] = 0;
+	max[2] = 0;
 	while (i < info->row)
 	{
 		while (j < info->col)

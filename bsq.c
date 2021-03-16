@@ -6,11 +6,12 @@
 /*   By: mson </var/mail/mson>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 18:44:29 by mson              #+#    #+#             */
-/*   Updated: 2021/03/16 17:39:53 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/16 18:54:59 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bsq.h"
+#include <stdio.h>
 
 extern char g_buff[BUFF_SIZE];
 
@@ -40,13 +41,11 @@ char	**ft_malloc(int fd, char **map, int row)
 	return (map);
 }
 
-char	*ft_condition(int fd, int *row)
+void	ft_condition(int fd, t_info *info)
 {
 	int index;
 	char c;
-	char	*first_line;
 	int size;
-	char	*condition;
 
 	index = 0;
 	size = 0;
@@ -55,14 +54,9 @@ char	*ft_condition(int fd, int *row)
 		g_buff[size] = c;
 		size++;
 	}
-	first_line =(char *)malloc(sizeof(char) * size + 1);
-	condition = (char *)malloc(sizeof(char) * 4);
-	g_buff[size] = '\0';
-	ft_strcpy(first_line, g_buff);
-	*row = split_number(first_line, size);
-	init_buff(g_buff);
-	ft_strlcat(condition, first_line + size - 3, 4);
-	return (condition);
+	info->row = split_number(g_buff, size);
+	info->condition = (char *)malloc(sizeof(char) * 4);
+	ft_strlcat(info->condition, g_buff + size - 3, 4);
 }
 
 int		ft_column(char **map)
@@ -93,16 +87,22 @@ void	set_map(int fd, t_info *info)
 	int row;
 	char **map;
 	int index;
-
+	int j;
+	printf("ffd");
 	row = 0;
 	index = -1;
-	info->condition = ft_condition(fd, &row);
-	info->map = ft_malloc(fd, map, row);
+	ft_condition(fd, info);
+	/*info->map = ft_malloc(fd, map, row);
 	info->col = ft_column(info->map);
 	info->row = row;
 	info->board = (int **)malloc(sizeof(int *) * info->row);
 	while (++index < row)
+	{
 		info->board[index] =(int *)malloc(sizeof(int) * info->col);
+		j = 0;
+		while (j < info->col)
+			info->board[index][j++] = 0;
+	}*/
 }
 
 void	free_info(t_info *info)
