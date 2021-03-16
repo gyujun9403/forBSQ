@@ -6,7 +6,7 @@
 /*   By: mson </var/mail/mson>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 18:44:29 by mson              #+#    #+#             */
-/*   Updated: 2021/03/16 22:01:31 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/16 22:29:15 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	ft_malloc(int fd, t_info *info)
 	info->map =(char **)malloc(sizeof(char *) * info->row);
 	while (read(fd, &c, 1))
 	{
-		g_buff[size] = c;
-		size++;
 		if (c == '\n')
 		{
 			info->map[line] = (char *)malloc(sizeof(char) * size + 1);
@@ -36,6 +34,8 @@ void	ft_malloc(int fd, t_info *info)
 			line++;
 			size = 0;
 		}
+		else 
+			g_buff[size++] = c;
 	}
 }
 
