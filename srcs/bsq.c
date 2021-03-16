@@ -6,7 +6,7 @@
 /*   By: mson </var/mail/mson>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 18:44:29 by mson              #+#    #+#             */
-/*   Updated: 2021/03/16 22:29:15 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 01:22:41 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ void	ft_malloc(int fd, t_info *info)
 			size = 0;
 		}
 		else 
+		{
 			g_buff[size++] = c;
+			error_isvalid_map()
+		}
 	}
 }
 

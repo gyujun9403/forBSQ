@@ -6,7 +6,7 @@
 /*   By: gyeon <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 16:52:05 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/16 22:01:59 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 00:49:07 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int argc, char **argv)
 	t_info   info;
 
 	index = 1;
+	info.error = 0;
 	if (argc == 1)
 	{
 		manual_w1(&info);
