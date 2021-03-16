@@ -13,7 +13,7 @@
 #include "bsq.h"
 #include <stdio.h>
 
-extern char g_buff[1024];
+extern char g_buff[BUFF_SIZE];
 
 void	init_buff(char *g_buff)
 {
