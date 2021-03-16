@@ -13,16 +13,16 @@
 #include "bsq.h"
 #include <stdio.h>
 
-char buff[1024];
+extern char g_buff[1024];
 
-void	init_buff(char *buff)
+void	init_buff(char *g_buff)
 {
 	int index;
 
 	index = 0;
-	while (buff[index])
+	while (g_buff[index])
 	{
-		buff[index] = 0;
+		g_buff[index] = 0;
 		index++;
 	}
 }
@@ -52,14 +52,14 @@ char	**ft_malloc(int fd, char **map, int row)
 	map =(char **)malloc(sizeof(char *) * row);
 	while (read(fd, &c, 1))
 	{
-		buff[size] = c;
+		g_buff[size] = c;
 		size++;
 		if (c == '\n')
 		{
 			map[line] = (char *)malloc(sizeof(char) * size + 1);
-			ft_strcpy(map[line], buff);
+			ft_strcpy(map[line], g_buff);
 			map[line][size] = '\0';
-			init_buff(buff);
+			init_buff(g_buff);
 			line++;
 			size = 0;
 		}
@@ -97,15 +97,15 @@ char	*ft_condition(int fd, int *row)
 	size = 0;
 	while (read(fd, &c, 1) && c != '\n')
 	{
-		buff[size] = c;
+		g_buff[size] = c;
 		size++;
 	}
 	first_line =(char *)malloc(sizeof(char) * size + 1);
 	condition = (char *)malloc(sizeof(char) * 4);
-	buff[size] = '\0';
-	ft_strcpy(first_line, buff);
+	g_buff[size] = '\0';
+	ft_strcpy(first_line, g_buff);
 	*row = split_number(first_line, size);
-	init_buff(buff);
+	init_buff(g_buff);
 	ft_strlcat(condition, first_line + size - 3, 4);
 	return (condition);
 }
