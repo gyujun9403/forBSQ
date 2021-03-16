@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
+#include <stdio.h>
+
 # define BUFF_SIZE 1024
 
 typedef struct s_info
@@ -26,6 +28,7 @@ typedef struct s_info
 	char *condition;
 	char **map;
 	int **board;
+	int error;
 }	t_info;
 
 char g_buff[BUFF_SIZE];
@@ -41,5 +44,7 @@ void manual_w2(t_info *info);
 void prt_map(t_info *info);
 void fill_board(t_info *info);
 void free_info(t_info *info);
+void	map_cond_check(char c, t_info *info);
+void	row_check(int fd, t_info *info);
 
 #endif
