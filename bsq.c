@@ -169,11 +169,5 @@ int	main(int argc, char **argv)
 			set_map(fd, &l_map);
 			index++;
 		}
-		printf("%d\n", l_map.row);
-		printf("%d\n", l_map.col);
-		printf("%s\n", l_map.condition);
-		printf("%s\n", l_map.map[0]);
-		printf("%s\n", l_map.map[1]);
-		printf("%s\n", l_map.map[l_map.row-1]);
 	}
 }
