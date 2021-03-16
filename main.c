@@ -6,7 +6,7 @@
 /*   By: gyeon <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 16:52:05 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/16 18:51:08 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/16 20:17:08 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,9 @@ int	main(int argc, char **argv)
 		while (index < argc)
 		{
 			fd = open(argv[index], O_RDONLY);
-			printf("open\n");
-			printf("%d\n", fd);
 			set_map(fd, &info);
-			printf("et_map\n");
 			close(fd);
-			printf("close\n");
 			fill_board(&info);
-			printf("fill_board\n");
-			prt_map(&info);
-			printf("ptr_map\n");
-			index++;
-			printf("%d\n", info.row);
-			printf("%d\n", info.col);
-			printf("%s\n", info.condition);
 			while (i < info.row)
 			{
 				while (j < info.col)
@@ -55,6 +44,8 @@ int	main(int argc, char **argv)
 				i++;
 				j = 0;
 			}
+			prt_map(&info);
+			index++;
 			free_info(&info);
 		}
 	return (0);
