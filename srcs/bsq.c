@@ -23,7 +23,7 @@ void	ft_malloc(int fd, t_info *info)
 	line = 0;
 	size = 0;
 	info->map =(char **)malloc(sizeof(char *) * info->row);
-	while (read(fd, &c, 1))
+	while (read(fd, &c, 1) && line < info->row)
 	{
 		if (c == '\n')
 		{
@@ -34,12 +34,13 @@ void	ft_malloc(int fd, t_info *info)
 			line++;
 			size = 0;
 		}
-		else 
+		else
 		{
 			g_buff[size++] = c;
-			error_isvalid_map()
+			map_cond_check(c,info);
 		}
 	}
+	row_check(fd, info);
 }
 
 void	ft_condition(int fd, t_info *info)
