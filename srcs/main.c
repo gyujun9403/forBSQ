@@ -6,7 +6,7 @@
 /*   By: gyeon <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 16:52:05 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 16:04:51 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 16:15:38 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv)
 			if (fd == -1)
 			{
 				write(1, "map error\n", 10);
-				break ;
+				continue ;
 			}
 			set_map(fd, &info);
 			close(fd);
