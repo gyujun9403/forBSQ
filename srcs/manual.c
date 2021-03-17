@@ -9,7 +9,7 @@ void manual_w1(t_info *info)
 	char w;
 
 	leng = 0;
-	while ((readin = read(0, &w, 1)) > 0 && w != '\n')
+	while ((readin = read(0, &w, 1)) > 0 && w != '\n' && w != '\0')
 	{
 		g_buff[leng++] = w;
 	}
@@ -36,7 +36,7 @@ void manual_w2(t_info *info)
 	while (i < info->row)
 	{
 		leng = 0;
-		while ((readin = read(0, &w, 1)) > 0 && w != '\n')
+		while ((readin = read(0, &w, 1)) > 0 && w != '\n' && w != '\0')
 		{
 			map_cond_check(w, info);
 			g_buff[leng++] = w;

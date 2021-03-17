@@ -6,7 +6,7 @@
 /*   By: gyeon <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 16:52:05 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 16:47:51 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 17:27:35 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 		info_init(&info);
 		manual_w1(&info);
 		if(info.error == 1)
-			write(1, "map error\n", 10);
+			;//write(1, "map error\n", 10);
 		else
 		{
 			fill_board(&info);
