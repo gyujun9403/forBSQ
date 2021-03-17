@@ -6,7 +6,7 @@
 /*   By: gyeon <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 16:52:05 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 16:15:38 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 16:41:32 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,13 @@ int	main(int argc, char **argv)
 		while (index < argc)
 		{
 			info_init(&info);
+			if (index != 1)
+				write(1, "\n", 1);
 			fd = open(argv[index], O_RDONLY);
-			if (fd == -1)
+			if (fd != -1)
 			{
 				write(1, "map error\n", 10);
+				index++;
 				continue ;
 			}
 			set_map(fd, &info);
@@ -61,7 +64,6 @@ int	main(int argc, char **argv)
 				fill_board(&info);
 				prt_map(&info);
 			}
-			info.error = 0;
 			free_info(&info);
 			index++;
 		}
