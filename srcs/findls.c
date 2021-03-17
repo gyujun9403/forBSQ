@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:07:54 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 19:27:26 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 20:36:15 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	chage_map(t_info *info, int i_end, int j_end, int leng)
 	}
 }
 
-void	fill_man(int *max, int first, int second, int third)
+void	fill_max(int *max, int first, int second, int third)
 {
 	max[0] = first;
 	max[1] = second;

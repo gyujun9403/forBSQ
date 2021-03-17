@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bsq.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mson </var/mail/mson>                      +#+  +:+       +#+        */
+/*   By: mson <mson@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/15 18:44:29 by mson              #+#    #+#             */
-/*   Updated: 2021/03/17 14:01:30 by gyeon            ###   ########.fr       */
+/*   Created: 2021/03/17 18:57:41 by mson              #+#    #+#             */
+/*   Updated: 2021/03/17 20:41:32 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,55 @@
 
 extern char g_buff[BUFF_SIZE];
 
-int	ft_malloc(int fd, t_info *info)
+void	set_char(char c, int *size, int *line, t_info *info)
 {
-	int line;
-	int size;
-	char c;
-	line = 0;
+	if (c == '\n' && *line < info->row)
+	{
+		info->map[*line] = (char *)malloc(sizeof(char) * (*size) + 1);
+		info->mall_map[1]++;
+		ft_strcpy(info->map[*line], g_buff);
+		info->map[*line][*size] = '\0';
+		init_buff(g_buff);
+		(*line)++;
+		*size = 0;
+	}
+	else
+	{
+		g_buff[(*size)++] = c;
+		map_cond_check(c, info);
+	}
+}
+
+int		ft_malloc(int fd, t_info *info)
+{
+	int		line;
+	char	c;
+	int		size;
+
 	size = 0;
-	info->map =(char **)malloc(sizeof(char *) * info->row);
+	line = 0;
+	info->map = (char **)malloc(sizeof(char *) * info->row);
 	info->mall_map[0] = 1;
 	while (read(fd, &c, 1))
 	{
-		if (line ==  info->row)
+		if (line == info->row)
 		{
 			info->error = 1;
 			return (info->error);
 		}
-		if (c == '\n' && line < info->row)
-		{
-			info->map[line] = (char *)malloc(sizeof(char) * size + 1);
-			info->mall_map[1]++;
-			ft_strcpy(info->map[line], g_buff);
-			info->map[line][size] = '\0';
-			init_buff(g_buff);
-			line++;
-			size = 0;
-		}
-		else
-		{
-			g_buff[size++] = c;
-			map_cond_check(c,info);
-		}
+		set_char(c, &size, &line, info);
 	}
 	if (info->mall_map[1] != info->row)
 		info->error = ERROR;
 	return (info->error);
 }
 
-int	ft_condition(int fd, t_info *info)
+int		ft_condition(int fd, t_info *info)
 {
-	int index;
-	char c;
-	int size;
-	int leng;
+	int		index;
+	char	c;
+	int		size;
+	int		leng;
 
 	index = 0;
 	size = 0;
@@ -75,37 +81,11 @@ int	ft_condition(int fd, t_info *info)
 	return (info->error);
 }
 
-int		ft_column(t_info *info)
-{
-	int line;
-	int size;
-	int check;
-
-	line = 0;
-	size = 0;
-	check = 0;
-	while (line < info->row)
-	{
-		while (info->map[line][size])
-			size++;
-		if (check == 0)
-			check = size;
-		else if (check != size)
-		{
-			info->error = 1;
-			return (info->error);
-		}
-		size = 0;
-		line++;
-	}
-	info->col = check;
-	return (info->error);
-}
-
 void	set_map(int fd, t_info *info)
 {
-	int index;
-	int j;
+	int	index;
+	int	j;
+
 	index = -1;
 	if (ft_condition(fd, info) == ERROR)
 		return ;
@@ -117,7 +97,7 @@ void	set_map(int fd, t_info *info)
 	info->mall_board[0] = 1;
 	while (++index < info->row)
 	{
-		info->board[index] =(int *)malloc(sizeof(int) * info->col);
+		info->board[index] = (int *)malloc(sizeof(int) * info->col);
 		info->mall_board[1]++;
 		j = 0;
 		while (j < info->col)

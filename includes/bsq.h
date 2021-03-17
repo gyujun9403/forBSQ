@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 00:14:51 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 19:26:49 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 20:42:05 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char g_buff[BUFF_SIZE];
 
 int				split_number(char *condition, int size);
 int				ft_column(t_info *info);
+void			set_char(char c, int *size, int *line, t_info *info);
 void			set_map(int fd, t_info *l_map);
 unsigned int	ft_strlcat(char *dest, char *src, unsigned int size);
 char			*ft_strcpy(char *dest, char *src);
@@ -52,5 +53,6 @@ void			chk_word(char c, t_info *info);
 void			map_cond_check(char c, t_info *info);
 void			row_check(int fd, t_info *info, int line);
 void			chk_condition(t_info *info, char *buff, int size);
+int				ft_column(t_info *info);
 
 #endif

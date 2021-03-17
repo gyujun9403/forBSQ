@@ -6,7 +6,7 @@
 /*   By: gyeon <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 00:17:40 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 19:13:43 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 20:39:30 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,31 @@ void	chk_condition(t_info *info, char *buff, int size)
 	if (buff[size - 2] == buff[size - 1])
 		info->error = ERROR;
 	return ;
+}
+
+int		ft_column(t_info *info)
+{
+	int line;
+	int size;
+	int check;
+
+	line = 0;
+	size = 0;
+	check = 0;
+	while (line < info->row)
+	{
+		while (info->map[line][size])
+			size++;
+		if (check == 0)
+			check = size;
+		else if (check != size)
+		{
+			info->error = 1;
+			return (info->error);
+		}
+		size = 0;
+		line++;
+	}
+	info->col = check;
+	return (info->error);
 }

@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 19:11:30 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 19:12:38 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 20:32:53 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	stdin_map(t_info *info)
 		stdin_board(info);
 }
 
-void	stdin_board(t_info info)
+void	stdin_board(t_info *info)
 {
 	int i;
 

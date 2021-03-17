@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gyeon <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/16 16:52:05 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 17:56:36 by gyeon            ###   ########.fr       */
+/*   Created: 2021/03/17 20:28:36 by gyeon             #+#    #+#             */
+/*   Updated: 2021/03/17 20:44:03 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,47 @@ void	info_init(t_info *info)
 	info->mall_board[1] = 0;
 }
 
-int	main(int argc, char **argv)
+void	start(int index, int argc, char **argv, t_info *info)
 {
-	int 	index;
-	int 	fd;
-	t_info   info;
+	int fd;
 
-	index = 1;
+	while (++index < argc)
+	{
+		info_init(info);
+		if (index != 1)
+			write(1, "\n", 1);
+		fd = open(argv[index], O_RDONLY);
+		if (fd == -1)
+		{
+			write(1, "map error\n", 10);
+			index++;
+			continue ;
+		}
+		set_map(fd, info);
+		close(fd);
+		if (info->error == 1)
+			write(1, "map error\n", 10);
+		else
+		{
+			fill_board(info);
+			prt_map(info);
+		}
+		free_info(info);
+	}
+}
+
+int		main(int argc, char **argv)
+{
+	int		index;
+	t_info	info;
+
+	index = 0;
 	if (argc == 1)
 	{
 		info_init(&info);
-		manual_w1(&info);
-		if(info.error == 1)
-			write(1, "map error\n", 10);
+		stdin_condition(&info);
+		if (info.error == 1)
+			;
 		else
 		{
 			fill_board(&info);
@@ -43,29 +71,6 @@ int	main(int argc, char **argv)
 		free_info(&info);
 	}
 	else
-		while (index < argc)
-		{
-			info_init(&info);
-			if (index != 1)
-				write(1, "\n", 1);
-			fd = open(argv[index], O_RDONLY);
-			if (fd == -1)
-			{
-				write(1, "map error\n", 10);
-				index++;
-				continue ;
-			}
-			set_map(fd, &info);
-			close(fd);
-			if (info.error == 1)
-				write(1, "map error\n", 10);
-			else
-			{
-				fill_board(&info);
-				prt_map(&info);
-			}
-			free_info(&info);
-			index++;
-		}
+		start(index, argc, argv, &info);
 	return (0);
 }
