@@ -1,14 +1,14 @@
 CFLAGS = -Wall -Wextra -Werror
 SRCDIR = srcs
 INCDIR = includes
-TARGET = BSQ
+TARGET = bsq
 SRCS = $(wildcard $(SRCDIR)/*.c)
 OBJS = $(SRCS:.c=.o)
 
 all: $(TARGET)
 
 %.o: %.c
-	gcc $(CFLAGS) -c $< -o $@ -I $(INCDIR) -g
+	gcc $(CFLAGS) -c $< -o $@ -I $(INCDIR)
 
 $(TARGET): $(OBJS)
 	gcc $(CFLAGS) -o $@ $^
