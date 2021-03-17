@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 00:14:51 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 20:42:05 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 21:49:52 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+
+#include <stdio.h>
 
 # define BUFF_SIZE 10001
 # define ERROR 1

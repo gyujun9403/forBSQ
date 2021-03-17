@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 19:11:30 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 20:32:53 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 22:17:51 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,32 @@ void	stdin_map(t_info *info)
 		i++;
 	}
 	if (info->mall_map[1] != info->row)
+	{
 		info->error = ERROR;
-	if (info->row != ERROR)
+		return ;
+	}
+	if (ft_column(info) == ERROR)
+		return ;
+	if (info->error != ERROR)
 		stdin_board(info);
 }
 
 void	stdin_board(t_info *info)
 {
 	int i;
+	int j;
 
+	j = 0;
 	i = 0;
 	info->board = (int **)malloc(sizeof(int *) * info->row);
 	info->mall_board[0] = 1;
 	while (i < info->row)
 	{
-		info->board[i++] = (int *)malloc(sizeof(int) * info->col);
+		info->board[i] = (int *)malloc(sizeof(int) * info->col);
+		while (j < info->col)
+			info->board[i][j++] = 0;
 		info->mall_board[1]++;
+		i++;
+		j = 0;
 	}
 }

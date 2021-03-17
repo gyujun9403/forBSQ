@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 20:28:36 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 20:44:03 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 23:00:06 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,11 @@ void	start(int index, int argc, char **argv, t_info *info)
 		if (fd == -1)
 		{
 			write(1, "map error\n", 10);
-			index++;
 			continue ;
 		}
 		set_map(fd, info);
 		close(fd);
-		if (info->error == 1)
+		if (info->error == ERROR)
 			write(1, "map error\n", 10);
 		else
 		{
@@ -62,7 +61,7 @@ int		main(int argc, char **argv)
 		info_init(&info);
 		stdin_condition(&info);
 		if (info.error == 1)
-			;
+			write(1, "map error\n", 10);
 		else
 		{
 			fill_board(&info);

@@ -6,7 +6,7 @@
 /*   By: gyeon <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 00:17:40 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 20:39:30 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 22:41:36 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ void	chk_word(char c, t_info *info)
 void	map_cond_check(char c, t_info *info)
 {
 	if ((c != info->condition[0] && c != info->condition[1])
-			&& (c >= ' ' && c <= '~'))
+			|| (!(c >= ' ' && c <= '~')))
+	{
 		info->error = ERROR;
+	}
 }
 
 void	row_check(int fd, t_info *info, int line)
