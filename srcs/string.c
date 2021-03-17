@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 00:14:30 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/16 16:51:56 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 19:18:02 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 	return (i);
 }
 
-void	init_buff(char *g_buff)
+void			init_buff(char *g_buff)
 {
 	int index;
 
@@ -49,7 +49,7 @@ void	init_buff(char *g_buff)
 	}
 }
 
-char	*ft_strcpy(char *dest, char *src)
+char			*ft_strcpy(char *dest, char *src)
 {
 	int index;
 
@@ -63,14 +63,14 @@ char	*ft_strcpy(char *dest, char *src)
 	return (dest);
 }
 
-int	split_number(char *condition, int size)
+int				split_number(char *condition, int size)
 {
 	int index;
 	int number;
 
 	index = 0;
 	number = 0;
-	while (index <size - 3)
+	while (index < size - 3)
 	{
 		if (condition[index] < '0' || condition[index] > '9')
 			return (0);

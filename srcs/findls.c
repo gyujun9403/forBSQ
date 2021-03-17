@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:07:54 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/16 22:27:05 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 19:27:26 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,22 @@
 **rcm[2]  (i, j)
 **check (i-1, j-1), (i-1, j), (i, j-1), and return minimum of it.
 */
-int min_2by2(t_info *info, int i, int j)
+
+int		min_2by2(t_info *info, int i, int j)
 {
 	int min;
-	int rcm[3]; 
-	
+	int rcm[3];
+
 	rcm[0] = 0;
 	rcm[1] = 0;
 	rcm[2] = 0;
-	if(i == 0 && j == 0)
+	if (i == 0 && j == 0)
 		;
 	else if (i != 0 && j == 0)
 		rcm[1] = info->board[i - 1][j];
 	else if (i == 0 && j != 0)
 		rcm[2] = info->board[i][j - 1];
-	else if(i != 0 && j != 0)
+	else if (i != 0 && j != 0)
 	{
 		rcm[0] = info->board[i - 1][j - 1];
 		rcm[1] = info->board[i - 1][j];
@@ -43,11 +44,11 @@ int min_2by2(t_info *info, int i, int j)
 	return (min);
 }
 
-void prt_map(t_info *info)
+void	prt_map(t_info *info)
 {
 	int i;
 	int j;
-	
+
 	i = 0;
 	j = 0;
 	while (i < info->row)
@@ -62,7 +63,7 @@ void prt_map(t_info *info)
 	}
 }
 
-void chage_map(t_info *info, int i_end, int j_end, int leng)
+void	chage_map(t_info *info, int i_end, int j_end, int leng)
 {
 	int i_st;
 	int j_st;
@@ -80,23 +81,28 @@ void chage_map(t_info *info, int i_end, int j_end, int leng)
 	}
 }
 
+void	fill_man(int *max, int first, int second, int third)
+{
+	max[0] = first;
+	max[1] = second;
+	max[2] = third;
+}
+
 /*
 ** max[0] : side length of largest square
 ** max[1] : max[0]'s i index
 ** max[2] : max[0]'s j index
 */
 
-void fill_board(t_info *info)
+void	fill_board(t_info *info)
 {
 	int i;
 	int j;
 	int max[3];
-	
+
 	i = 0;
 	j = 0;
-	max[0] = 0;
-	max[1] = 0;
-	max[2] = 0;
+	fill_max(max, 0, 0, 0);
 	while (i < info->row)
 	{
 		while (j < info->col)
@@ -106,11 +112,7 @@ void fill_board(t_info *info)
 			else
 				info->board[i][j] = 0;
 			if (max[0] < info->board[i][j])
-			{
-				max[0] = info->board[i][j];
-				max[1] = i;
-				max[2] = j;
-			}
+				fill_max(max, info->board[i][j], i, j);
 			j++;
 		}
 		i++;
