@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 00:14:51 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 03:14:41 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 14:57:10 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,19 @@
 #include <stdio.h>
 
 # define BUFF_SIZE 1024
+# define ERROR 1
 
 typedef struct s_info
 {
 	int row;
 	int col;
-	char *condition;
-	char **map;
 	int **board;
 	int error;
+	int mall_condition;
+	int mall_map[2];
+	int mall_board[2];
+	char *condition;
+	char **map;
 }	t_info;
 
 char g_buff[BUFF_SIZE];
