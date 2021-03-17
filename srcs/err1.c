@@ -6,7 +6,7 @@
 /*   By: gyeon <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 00:17:40 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 15:20:24 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 16:01:02 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void chk_condition(t_info *info, char *buff, int size)
 	}
 	while (i < size - 3)
 	{
-		if (!(buff[i] >= '0' && buff[i] <= '9') && buff[0] == '0')
+		if (!(buff[i] >= '0' && buff[i] <= '9') || buff[0] == '0')
 		{
 //			printf("size : %d / i :% d / buff :  %c", size, i, buff[i]);
 			info->error = 1;
