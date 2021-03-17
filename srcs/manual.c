@@ -51,7 +51,8 @@ void manual_w2(t_info *info)
 		info->error = ERROR;
 		return ;
 	}
-	info->col = ft_column(info);
+	if (ft_column(info) == ERROR)
+		return;
 	info->board = (int **)malloc(sizeof(int *) * info->row);
 	info->mall_board[0] = 1;
 	i = 0;
