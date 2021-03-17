@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 19:11:30 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 22:17:51 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 23:36:00 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	stdin_condition(t_info *info)
 	}
 	chk_condition(info, g_buff, leng);
 	if (info->error == ERROR)
+	{
+		info->error = STDIN_CONDI_ERROR;
 		return ;
+	}
 	info->row = split_number(g_buff, leng);
 	info->condition = (char *)malloc(4);
 	info->mall_condition = 1;

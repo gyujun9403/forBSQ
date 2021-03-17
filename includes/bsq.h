@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 00:14:51 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 21:49:52 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 23:38:10 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # define BUFF_SIZE 10001
 # define ERROR 1
+# define STDIN_CONDI_ERROR 2
 
 typedef struct	s_info
 {

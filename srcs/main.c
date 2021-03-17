@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 20:28:36 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 23:00:06 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 23:37:39 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int		main(int argc, char **argv)
 	{
 		info_init(&info);
 		stdin_condition(&info);
-		if (info.error == 1)
+		if (info.error == ERROR)
 			write(1, "map error\n", 10);
-		else
+		else if (info.error == 0)
 		{
 			fill_board(&info);
 			prt_map(&info);
