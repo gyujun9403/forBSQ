@@ -6,7 +6,7 @@
 /*   By: gyeon <gyeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 00:14:51 by gyeon             #+#    #+#             */
-/*   Updated: 2021/03/17 14:57:10 by gyeon            ###   ########.fr       */
+/*   Updated: 2021/03/17 17:45:45 by gyeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 #include <stdio.h>
 
-# define BUFF_SIZE 1024
+# define BUFF_SIZE 10001
 # define ERROR 1
 
 typedef struct s_info
